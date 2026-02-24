@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url(./fonts/OpenSans/OpenSans/OpenSans-VariableFont_wdth\,wght.ttf);
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url(./fonts/OpenSans/OpenSans/OpenSans-Italic-VariableFont_wdth\,wght.ttf);
+  font-weight: 300 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf);
+  font-weight: 300 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-title: 'Montserrat', system-ui, sans-serif;
+  --font-main: 'Open Sans', system-ui, sans-serif;
+}
+@layer base {
+  body {
+    font-family: var(--font-main);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-title);
+  }
+}
+
+.font-montserrat {
+  font-family: var(--font-title);
+}
+.font-opensans {
+  font-family: var(--font-title);
+}
