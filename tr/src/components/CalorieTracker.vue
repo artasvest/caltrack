@@ -9,9 +9,26 @@
 import type { Day } from '../types/types'
 import DayCard from './DayCard.vue';
 import { ref } from 'vue';
-const days = ref<Day[]>([
 
-])
+
+function generateDays(count: number): Day[] {
+  return Array.from({ length: count }, (_, i) => {
+    const date = new Date()
+    date.setDate(date.getDate() - (count - 1 - i))
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+    
+    return {
+      date: dateStr,
+      type: 'rest',
+      additional: {},
+      nutrients: { protein: 0, fat: 0, carbs: 0 }
+    }
+  })
+}
+
+const days = ref<Day[]>(generateDays(7))
+
+
 </script>
 
 <style scoped>

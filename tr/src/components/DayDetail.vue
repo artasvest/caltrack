@@ -1,9 +1,9 @@
 <template>
-    <button @click="addDay"></button>
+    <button @click="openDay"></button>
 </template>
 
 <script setup lang="ts">
-const addDay = () => {
+const openDay = () => {
     
 }
 </script>
