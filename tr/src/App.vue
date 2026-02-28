@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import CalorieTracker from './components/CalorieTracker.vue';
+import CalorieTracker from './views/DaysList.vue';
 </script>
 
 <template>
-<CalorieTracker>
-    
-</CalorieTracker>
+      <router-view /> 
 </template>
 
 <style scoped>

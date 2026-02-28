@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import type { Day } from '../types/types'
-import DayCard from './DayCard.vue';
+import DayCard from '../components/DayCard.vue';
 import { ref } from 'vue';
 
 
@@ -19,7 +19,7 @@ function generateDays(count: number): Day[] {
     
     return {
       date: dateStr,
-      type: 'rest',
+      type: 'отдых',
       additional: {},
       nutrients: { protein: 0, fat: 0, carbs: 0 }
     }

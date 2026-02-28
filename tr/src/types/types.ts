@@ -21,6 +21,6 @@ export interface Additional {
 export interface Day {
   date: string
   additional: Additional
-  type: 'workout' | 'rest'
+  type: 'тренировка' | 'отдых'
   nutrients: Nutrients
 }
