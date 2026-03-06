@@ -6,28 +6,22 @@
 </template>
 
 <script setup lang="ts">
-import type { Day } from '../types/types'
 import DayCard from '../components/DayCard.vue';
-import { ref } from 'vue';
+import { useDayStore } from '../stores/dayStore'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue';
 
 
-function generateDays(count: number): Day[] {
-  return Array.from({ length: count }, (_, i) => {
-    const date = new Date()
-    date.setDate(date.getDate() - (count - 1 - i))
-    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-    
-    return {
-      date: dateStr,
-      type: 'отдых',
-      additional: {},
-      nutrients: { protein: 0, fat: 0, carbs: 0 }
-    }
-  })
-}
+const store = useDayStore()
+const { days } = storeToRefs(store)
 
-const days = ref<Day[]>(generateDays(7))
-
+onMounted(async() => {
+    await store.loadDays()
+    await store.updateDay('2026-03-06', {
+        type: 'тренировка',
+        nutrients: {protein:150, fat:50, carbs:200}
+    })
+})
 
 </script>
 
