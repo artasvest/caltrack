@@ -36,7 +36,7 @@ export async function saveDay(day: Day) {
   return new Promise<void>((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readwrite')
     const store = tx.objectStore(STORE_NAME)
-    store.put(day)
+    store.put(JSON.parse(JSON.stringify(day)))
     tx.oncomplete = () => resolve()
     tx.onerror = () => reject(tx.error)
   })

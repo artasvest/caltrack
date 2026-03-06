@@ -15,12 +15,9 @@ import { onMounted } from 'vue';
 const store = useDayStore()
 const { days } = storeToRefs(store)
 
+
 onMounted(async() => {
     await store.loadDays()
-    await store.updateDay('2026-03-06', {
-        type: 'тренировка',
-        nutrients: {protein:150, fat:50, carbs:200}
-    })
 })
 
 </script>
