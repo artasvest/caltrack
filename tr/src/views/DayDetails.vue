@@ -132,12 +132,12 @@
                         </div>
                         <div class="flex flex-col">
                             <label class="text-xs text-gray-500 mb-1">Сон (ч)</label>
-                            <input type="number" v-model.number="additional.sleep" placeholder="0" 
+                            <input type="number" v-model.number="additional.sleep" placeholder="0" min="0" max="24"  @input="additional.sleep = additional.sleep > 24 ? 24 : additional.sleep"  
                                    class="p-2 border-2 border-gray-200 rounded-lg text-center focus:border-indigo-400 focus:outline-none">
                         </div>
                         <div class="flex flex-col">
                             <label class="text-xs text-gray-500 mb-1">Оценка</label>
-                            <input type="number" v-model.number="additional.sleepRating" min="1" max="10" placeholder="0" 
+                            <input type="number" v-model.number="additional.sleepRating" min="0" max="10" placeholder="0" @input="additional.sleepRating = additional.sleepRating > 10 ? 10 : additional.sleepRating" 
                                    class="p-2 border-2 border-gray-200 rounded-lg text-center focus:border-purple-400 focus:outline-none">
                         </div>
                     </div>
@@ -198,6 +198,7 @@ watch(day,(newDay)=>{
 
 function save() {
     if (day.value){
+        if (additional.sleepRating>10) additional.sleepRating = 10
         store.updateDay(day.value.date, {nutrients})
         store.updateDay(day.value.date, {additional})
     }

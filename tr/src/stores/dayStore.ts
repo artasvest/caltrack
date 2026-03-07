@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { getAllDays, saveDay } from '../db/db'
-import type { Day } from '../types/types'
+import type { Day, Meal } from '../types/types'
 
 function generateDays(count: number): Day[] {
   return Array.from({ length: count }, (_, i) => {
@@ -12,7 +12,8 @@ function generateDays(count: number): Day[] {
       date: dateStr,
       type: 'отдых',
       additional: {},
-      nutrients: { protein: 0, fat: 0, carbs: 0 }
+      nutrients: { protein: 0, fat: 0, carbs: 0 },
+      meals: [],
     }
   })
 }
@@ -38,5 +39,27 @@ export const useDayStore = defineStore('days', () => {
     }
   }
 
-  return { days, loadDays, updateDay }
+  async function addMeal(date: string, meal: Meal){
+    const idx = days.value.findIndex(d => d.date === date)
+    if (idx !== -1){
+      const day = days.value[idx]
+      if (day){
+        day.meals.push(meal)
+        await saveDay(day)
+      }
+    }
+  }
+
+  async function removeMeal(date:string, mealId: string){
+    const idx = days.value.findIndex(d => d.date === date)
+    if (idx !== -1){
+      const day = days.value[idx]
+      if (day){
+        day.meals = day.meals.filter(m => m.id !== mealId )
+        await saveDay(day)
+      }
+    }
+  }
+
+  return { days, loadDays, updateDay, addMeal, removeMeal }
 })
