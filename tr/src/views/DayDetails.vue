@@ -1,5 +1,5 @@
 <template>
-    <div v-if="day" class="max-w-2xl mx-auto p-5">
+    <div v-if="day" class="max-w-2xl mx-auto p-5 relative z-0">
         <!-- Шапка с кнопкой назад и датой -->
         <div class="mb-6 flex items-center gap-4">
             <button 
@@ -19,139 +19,200 @@
                 :class="day.type === 'тренировка' ? 'bg-gradient-to-r from-green-400 to-blue-500' : 'bg-gradient-to-r from-gray-400 to-gray-500'"
             ></div>
 
-            <!-- Тип дня -->
             <div class="pt-6 px-6 pb-3">
                 <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-500">Тип дня</span>
-                    <span 
-                        class="px-4 py-1.5 text-sm font-medium rounded-full shadow-sm"
-                        :class="day.type === 'тренировка' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-gray-100 text-gray-600 border border-gray-200'"
+                    <div class="relative flex bg-gray-100 rounded-full p-1" ref="container">
+                    <div 
+                        class="absolute top-1 bottom-1 rounded-full transition-all duration-300 ease-in-out"
+                        :class="day.type === 'тренировка' ? 'bg-gradient-to-r from-green-400 to-blue-500 shadow-sm' : 'bg-white shadow-sm'"
+                        :style="sliderStyle"
+                    ></div>
+
+                    <button
+                        ref="btnRest"
+                        @click="toggleType"
+                        class="relative z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-300 cursor-pointer"
+                        :class="day.type === 'отдых' ? 'text-gray-700' : 'text-gray-400'"
                     >
-                        {{ day.type === 'тренировка' ? '🏋️‍♂️ Тренировка' : '🛌 Отдых' }}
-                    </span>
+                        😴 Отдых
+                    </button>
+                    <button
+                        ref="btnWorkout"
+                        @click="toggleType"
+                        class="relative z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-300 cursor-pointer"
+                        :class="day.type === 'тренировка' ? 'text-white' : 'text-gray-400'"
+                    >
+                        💪 Тренировка
+                    </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Блок с весом и сном -->
-            <div class="px-6 py-5 bg-gradient-to-br from-gray-50 to-white border-y border-gray-100">
-                <h2 class="text-sm font-medium text-gray-500 mb-4">Физические показатели</h2>
+           <div class="px-6 py-5 bg-gradient-to-br from-gray-50 to-white border-y border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-medium text-gray-500">Физические показатели</h2>
+                    <button 
+                    @click="isEditing = !isEditing" 
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+                    :class="isEditing 
+                        ? 'bg-blue-500 text-white shadow-sm hover:bg-blue-600' 
+                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'"
+                    >
+                    <span>{{ isEditing ? '✓' : '✏️' }}</span>
+                    <span>{{ isEditing ? 'Готово' : 'Изменить' }}</span>
+                    </button>
+                </div>
+
                 <div class="flex items-center justify-around">
+                    <!-- Вес -->
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
                             <span class="text-blue-600 text-xl">⚖️</span>
                         </div>
                         <div class="text-xs text-gray-500">Вес</div>
-                        <div class="font-bold text-gray-800 text-lg">
+                        <input v-if="isEditing" type="number" v-model.number="additional.weight" @change="save"
+                            class="w-16 text-center font-bold text-gray-800 border-b-2 border-blue-400 focus:outline-none" />
+                        <div v-else class="font-bold text-gray-800 text-lg">
                             {{ additional.weight ? additional.weight + ' кг' : '—' }}
                         </div>
                     </div>
-                    
+
+                    <!-- Сон -->
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-2">
                             <span class="text-indigo-600 text-xl">😴</span>
                         </div>
                         <div class="text-xs text-gray-500">Сон</div>
-                        <div class="font-bold text-gray-800 text-lg">
+                        <input v-if="isEditing" type="number" v-model.number="additional.sleep" @change="save"
+                            @input="additional.sleep = additional.sleep > 24 ? 24 : additional.sleep"
+                            class="w-16 text-center font-bold text-gray-800 border-b-2 border-indigo-400 focus:outline-none" />
+                        <div v-else class="font-bold text-gray-800 text-lg">
                             {{ additional.sleep ? additional.sleep + ' ч' : '—' }}
                         </div>
                     </div>
-                    
+
+                    <!-- Оценка -->
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-2">
                             <span class="text-purple-600 text-xl">⭐</span>
                         </div>
                         <div class="text-xs text-gray-500">Оценка</div>
-                        <div class="font-bold text-gray-800 text-lg">
+                        <input v-if="isEditing" type="number" v-model.number="additional.sleepRating" @change="save"
+                            @input="additional.sleepRating = additional.sleepRating > 10 ? 10 : additional.sleepRating"
+                            class="w-16 text-center font-bold text-gray-800 border-b-2 border-purple-400 focus:outline-none" />
+                        <div v-else class="font-bold text-gray-800 text-lg">
                             {{ additional.sleepRating ? additional.sleepRating + '/10' : '—' }}
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="px-5 py-4 bg-white border-t border-gray-100">
+            <div class="space-y-3">
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-600">Белки</span>
+                        <span class="font-semibold text-blue-600">{{ day.nutrients.protein }}г</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                            class="bg-blue-500 h-2 rounded-full transition-all duration-300 group-hover:bg-blue-600"
+                            :style="{ width: Math.min(100, (day.nutrients.protein / 200) * 100) + '%' }"
+                        ></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-600">Жиры</span>
+                        <span class="font-semibold text-yellow-600">{{ day.nutrients.fat }}г</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                            class="bg-yellow-500 h-2 rounded-full transition-all duration-300 group-hover:bg-yellow-600"
+                            :style="{ width: Math.min(100, (day.nutrients.fat / 70) * 100) + '%' }"
+                        ></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-600">Углеводы</span>
+                        <span class="font-semibold text-green-600">{{ day.nutrients.carbs }}г</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                            class="bg-green-500 h-2 rounded-full transition-all duration-300 group-hover:bg-green-600"
+                            :style="{ width: Math.min(100, (day.nutrients.carbs / 300) * 100) + '%' }"
+                        ></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-600">Калории</span>
+                        <span class="font-semibold text-red-600">{{ day.calories }}kcal</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                            class="bg-red-500 h-2 rounded-full transition-all duration-300 group-hover:bg-red-600"
+                            :style="{ width: Math.min(100, (day.calories / 2630) * 100) + '%' }"
+                        ></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
             <!-- Редактирование показателей -->
             <div class="p-6 space-y-6">
                 <!-- Питание -->
-                <div>
-                    <h2 class="text-sm font-medium text-gray-500 mb-4">Питание (граммы)</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-sm mb-2">
-                                <label class="text-gray-600">Белки</label>
-                                <span class="font-semibold text-blue-600">{{ nutrients.protein }}г</span>
-                            </div>
-                            <input @change="save" type="number" v-model.number="nutrients.protein" placeholder="0" 
-                                   class="w-full p-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-50">
-                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                <div 
-                                    class="bg-blue-500 h-2 rounded-full transition-all"
-                                    :style="{ width: Math.min(100, (nutrients.protein / 200) * 100) + '%' }"
-                                ></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between text-sm mb-2">
-                                <label class="text-gray-600">Жиры</label>
-                                <span class="font-semibold text-yellow-600">{{ nutrients.fat }}г</span>
-                            </div>
-                            <input type="number" v-model.number="nutrients.fat" placeholder="0" 
-                                   class="w-full p-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:border-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-50">
-                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                <div 
-                                    class="bg-yellow-500 h-2 rounded-full transition-all"
-                                    :style="{ width: Math.min(100, (nutrients.fat / 70) * 100) + '%' }"
-                                ></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between text-sm mb-2">
-                                <label class="text-gray-600">Углеводы</label>
-                                <span class="font-semibold text-green-600">{{ nutrients.carbs }}г</span>
-                            </div>
-                            <input type="number" v-model.number="nutrients.carbs" placeholder="0" 
-                                   class="w-full p-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:border-green-400 focus:outline-none focus:ring-4 focus:ring-green-50">
-                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                <div 
-                                    class="bg-green-500 h-2 rounded-full transition-all"
-                                    :style="{ width: Math.min(100, (nutrients.carbs / 300) * 100) + '%' }"
-                                ></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Дополнительные показатели (редактирование) -->
-                <div>
-                    <h2 class="text-sm font-medium text-gray-500 mb-4">Дополнительно</h2>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="flex flex-col">
-                            <label class="text-xs text-gray-500 mb-1">Вес (кг)</label>
-                            <input type="number" v-model.number="additional.weight" placeholder="0" 
-                                   class="p-2 border-2 border-gray-200 rounded-lg text-center focus:border-blue-400 focus:outline-none">
-                        </div>
-                        <div class="flex flex-col">
-                            <label class="text-xs text-gray-500 mb-1">Сон (ч)</label>
-                            <input type="number" v-model.number="additional.sleep" placeholder="0" min="0" max="24"  @input="additional.sleep = additional.sleep > 24 ? 24 : additional.sleep"  
-                                   class="p-2 border-2 border-gray-200 rounded-lg text-center focus:border-indigo-400 focus:outline-none">
-                        </div>
-                        <div class="flex flex-col">
-                            <label class="text-xs text-gray-500 mb-1">Оценка</label>
-                            <input type="number" v-model.number="additional.sleepRating" min="0" max="10" placeholder="0" @input="additional.sleepRating = additional.sleepRating > 10 ? 10 : additional.sleepRating" 
-                                   class="p-2 border-2 border-gray-200 rounded-lg text-center focus:border-purple-400 focus:outline-none">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Кнопки действий -->
-                <div class="flex gap-3 pt-4">
-                    <button @click="toggleType" 
-                            class="flex-1 px-4 py-3 rounded-xl font-medium transition-all shadow-sm hover:shadow-md"
-                            :class="day?.type === 'тренировка' 
-                                ? 'bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white' 
-                                : 'bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white'">
-                        {{ day?.type === 'тренировка' ? '💪 Тренировка' : '😴 Отдых' }}
-                    </button>
+                <div class="space-y-4">
+                    <h2 class="text-sm font-medium text-gray-500 mb-3">Приёмы пищи</h2>
+                    
+                    <MealSection
+                        category="Завтрак"
+                        :meals="day.meals.filter(m => m.category === 'завтрак')"
+                        @openModal="openModal('завтрак')"
+                        @remove="handleRemoveMeal"
+                    />
+                    
+                    <MealSection
+                        category="Обед"
+                        :meals="day.meals.filter(m => m.category === 'обед')"
+                        @openModal="openModal('обед')"
+                        @remove="handleRemoveMeal"
+                    />
+                    
+                    <MealSection
+                        category="Ужин"
+                        :meals="day.meals.filter(m => m.category === 'ужин')"
+                        @openModal="openModal('ужин')"
+                        @remove="handleRemoveMeal"
+                    />
+                    
+                    <MealSection
+                        category="Перекус"
+                        :meals="day.meals.filter(m => m.category === 'перекус')"
+                        @openModal="openModal('перекус')"
+                        @remove="handleRemoveMeal"
+                    />
+             
+                    <AddMealModal
+                        v-if="isModalOpen && activeModal === 'meal'"
+                        :category="activeCategory"
+                        @close="isModalOpen = false"
+                        @add="handleAddMeal"
+                        @switchToFood = "activeModal = 'food'"
+                    />
+                    <AddFoodModal
+                        v-if="isModalOpen && activeModal ==='food'"
+                        @close="isModalOpen = false"
+                        @switchToMeal="activeModal = 'meal'"
+                    />
+                    
                 </div>
             </div>
         </div>
@@ -159,12 +220,53 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive, onMounted, watch, onUnmounted} from 'vue'
+import {computed, reactive, onMounted, watch, onUnmounted, ref, nextTick} from 'vue'
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useDayStore } from '@/stores/dayStore';
 import { storeToRefs } from 'pinia';
 import type { Day } from '@/types/types';
-import { m } from 'vue-router/dist/router-CWoNjPRp.mjs';
+import MealSection from '../components/Meals/MealSection.vue'
+import AddMealModal from '../components/Meals/AddMealModal.vue'
+import type { Meal } from '../types/types'
+import AddFoodModal from '@/components/Meals/AddFoodModal.vue';
+
+const btnRest = ref<HTMLElement | null>(null)
+const btnWorkout = ref<HTMLElement | null>(null)
+
+const sliderStyle = computed(() => {
+  const btn = day.value?.type === 'тренировка' ? btnWorkout.value : btnRest.value
+  if (!btn) return {}
+  return {
+    left: btn.offsetLeft + 'px',
+    width: btn.offsetWidth + 'px'
+  }
+})
+
+
+const activeModal = ref<'meal' | 'food'>('meal')
+const isEditing = ref(false)
+const isModalOpen = ref(false)
+const activeCategory = ref<Meal['category']>('завтрак')
+
+function openModal(category: Meal['category']) {
+  activeCategory.value = category
+  isModalOpen.value = true
+}
+
+
+
+function handleAddMeal(meal: Meal) {
+  if (day.value) {
+    store.addMeal(day.value.date, meal)
+  }
+}
+
+function handleRemoveMeal(mealId: string) {
+  if (day.value) {
+    store.removeMeal(day.value.date, mealId)
+  }
+}
+
 
 const route = useRoute()
 const router = useRouter()
@@ -173,11 +275,6 @@ const {days} = storeToRefs(store)
 
 const day = computed<Day | undefined>(() => days.value.find(d => d.date == route.params.date))
 
-const nutrients = reactive ({
-    protein: 0,
-    fat: 0,
-    carbs: 0,
-})
 
 const additional = reactive({
     weight: 0,
@@ -187,9 +284,7 @@ const additional = reactive({
 
 watch(day,(newDay)=>{
     if(newDay){
-        nutrients.protein = newDay.nutrients.protein
-        nutrients.fat = newDay.nutrients.fat
-        nutrients.carbs = newDay.nutrients.carbs     
+     
         additional.weight = newDay.additional.weight ?? 0
         additional.sleep = newDay.additional.sleep ?? 0
         additional.sleepRating = newDay.additional.sleepRating ?? 0
@@ -199,13 +294,13 @@ watch(day,(newDay)=>{
 function save() {
     if (day.value){
         if (additional.sleepRating>10) additional.sleepRating = 10
-        store.updateDay(day.value.date, {nutrients})
         store.updateDay(day.value.date, {additional})
     }
 }
 
 function toggleType(){
     if (day.value){
+        save()
         store.updateDay(day.value.date, {type: day.value.type === 'тренировка' ? 'отдых' : 'тренировка'})
     }
 }
@@ -218,6 +313,7 @@ function goToDaysList(){
 onBeforeRouteLeave(()=>{
     save()
 })
+
 function handldeBeforeUnload(){
     save()
 }

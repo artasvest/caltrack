@@ -14,6 +14,7 @@ function generateDays(count: number): Day[] {
       additional: {},
       nutrients: { protein: 0, fat: 0, carbs: 0 },
       meals: [],
+      calories: 0
     }
   })
 }
@@ -39,12 +40,23 @@ export const useDayStore = defineStore('days', () => {
     }
   }
 
+  function recalcNutrients(day: Day) {
+  day.nutrients = day.meals.reduce((acc, meal) => ({
+    protein: acc.protein + meal.nutrients.protein,
+    fat: acc.fat + meal.nutrients.fat,
+    carbs: acc.carbs + meal.nutrients.carbs
+  }), { protein: 0, fat: 0, carbs: 0 })
+
+  day.calories = day.meals.reduce((acc,meal) => acc+meal.calories ,0)
+}
+
   async function addMeal(date: string, meal: Meal){
     const idx = days.value.findIndex(d => d.date === date)
     if (idx !== -1){
       const day = days.value[idx]
       if (day){
         day.meals.push(meal)
+        recalcNutrients(day)
         await saveDay(day)
       }
     }
@@ -56,6 +68,7 @@ export const useDayStore = defineStore('days', () => {
       const day = days.value[idx]
       if (day){
         day.meals = day.meals.filter(m => m.id !== mealId )
+        recalcNutrients(day)
         await saveDay(day)
       }
     }
