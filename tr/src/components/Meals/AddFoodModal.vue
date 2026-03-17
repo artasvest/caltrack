@@ -71,12 +71,11 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
+import { reactive} from 'vue'
 import { useFoodStore } from '@/stores/foodStore'
 
 const store = useFoodStore()
   
-
 const props = defineProps<{
   standalone?: boolean
 }>()
