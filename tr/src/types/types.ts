@@ -42,9 +42,18 @@ export interface Set{
   weight:number
 }
 
+export interface templateSet{
+  reps:number
+}
+
 export interface Exercise {
   id: string
   name: string
+}
+
+export interface TemplateWorkoutExercise{
+  sets: templateSet[]
+  exercise: Exercise
 }
 
 export interface WorkoutExercise{
@@ -55,7 +64,7 @@ export interface WorkoutExercise{
 export interface WorkoutTemplate {
   id: string
   name: string
-  exercises: WorkoutExercise[]  
+  exercises: TemplateWorkoutExercise[]  
 }
 
 export interface Workout {

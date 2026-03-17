@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { getAllExercises, saveExercise } from '../db/db'
+import { getAllExercises, saveExercise, removeExercise as removeExerciseFromDB } from '../db/db'
 import type { Exercise } from '../types/types' 
 
 export const useExerciseStore = defineStore('exercise', () => {
@@ -18,5 +18,10 @@ export const useExerciseStore = defineStore('exercise', () => {
         await saveExercise(exercise)
     }
 
-    return {exercises, loadExercises, addExercise}
+     async function removeExercise(id:string){
+            exercises.value = exercises.value.filter(e => e.id !== id)
+            await removeExerciseFromDB(id)
+        }
+
+    return {exercises, loadExercises, addExercise, removeExercise}
 })

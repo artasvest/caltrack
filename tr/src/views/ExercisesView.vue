@@ -17,7 +17,7 @@
         v-for="exercise in exercises" 
         :key="exercise.id" 
         :exercise="exercise"
-        @remove=""
+        @remove="handleRemoveExercise"
         ></ExerciseItem>
     </div>
 </template>
@@ -36,6 +36,12 @@ const isModalOpen = ref(false)
 onMounted(async () => {
   await store.loadExercises()
 })
+
+function handleRemoveExercise(exerciseId: string) {
+    store.removeExercise(exerciseId)
+}
+
+
 
 </script>
 

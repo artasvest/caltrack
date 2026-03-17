@@ -1,8 +1,8 @@
-import type { Day, Food, Exercise, Workout } from '../types/types'
+import type { Day, Food, Exercise, Workout, WorkoutTemplate } from '../types/types'
 
 
 const DB_NAME = 'caltrack'
-const DB_VERSION = 4
+const DB_VERSION = 6
 const STORE_NAME = 'days'
 const FOODS_STORE = 'foods'
 const WORKOUTS_STORE = 'workouts'
@@ -112,9 +112,20 @@ export async function saveExercise(exercise: Exercise) {
   })
 }
 
-export async function getAllWorkouts(): Promise<Workout[]> {
+export async function removeExercise(id:string) {
   const db = await openDB()
-  return new Promise<Workout[]>((resolve, reject) => {
+  return new Promise<void>((resolve,reject) =>{
+    const tx = db.transaction(EXERCISES_STORE, 'readwrite')
+    const store = tx.objectStore(EXERCISES_STORE)
+    store.delete(id)
+    tx.oncomplete = () => resolve()
+    tx.onerror = () => reject(tx.error)
+  })
+}
+
+export async function getAllWorkouts(): Promise<WorkoutTemplate[]> {
+  const db = await openDB()
+  return new Promise<WorkoutTemplate[]>((resolve, reject) => {
     const tx = db.transaction(WORKOUTS_STORE, 'readonly')
     const store = tx.objectStore(WORKOUTS_STORE)
     const request = store.getAll()
@@ -123,11 +134,11 @@ export async function getAllWorkouts(): Promise<Workout[]> {
   })
 }
 
-export async function saveWorkouts(workout: Workout) {
+export async function saveWorkouts(workout: WorkoutTemplate) {
   const db = await openDB()
   return new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(EXERCISES_STORE, 'readwrite')
-    const store = tx.objectStore(EXERCISES_STORE)
+    const tx = db.transaction(WORKOUTS_STORE, 'readwrite')
+    const store = tx.objectStore(WORKOUTS_STORE)
     store.put(JSON.parse(JSON.stringify(workout)))
     tx.oncomplete = () => resolve()
     tx.onerror = () => reject(tx.error)
