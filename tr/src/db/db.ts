@@ -2,7 +2,7 @@ import type { Day, Food, Exercise, Workout } from '../types/types'
 
 
 const DB_NAME = 'caltrack'
-const DB_VERSION = 3
+const DB_VERSION = 4
 const STORE_NAME = 'days'
 const FOODS_STORE = 'foods'
 const WORKOUTS_STORE = 'workouts'
@@ -21,6 +21,13 @@ function openDB(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains(FOODS_STORE)) {
         db.createObjectStore(FOODS_STORE, { keyPath: 'id' })
       }
+      if (!db.objectStoreNames.contains(WORKOUTS_STORE)) {
+        db.createObjectStore(WORKOUTS_STORE, { keyPath: 'id' })
+      }
+      if (!db.objectStoreNames.contains(EXERCISES_STORE)) {
+        db.createObjectStore(EXERCISES_STORE, { keyPath: 'id' })
+      }
+      
     }
 
     request.onsuccess = () => resolve(request.result)

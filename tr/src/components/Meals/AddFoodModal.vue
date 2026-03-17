@@ -75,23 +75,13 @@ import { reactive, ref, computed } from 'vue'
 import { useFoodStore } from '@/stores/foodStore'
 
 const store = useFoodStore()
-
-const btnMeal = ref<HTMLElement | null>(null)
-const btnFood = ref<HTMLElement | null>(null)
   
 
 const props = defineProps<{
   standalone?: boolean
 }>()
 
-const sliderStyle = computed(() => {
-  const btn = btnFood.value
-  if (!btn) return {}
-  return {
-    left: btn.offsetLeft + 'px',
-    width: btn.offsetWidth + 'px'
-  }
-})
+
 
 const emit = defineEmits<{
   close: []

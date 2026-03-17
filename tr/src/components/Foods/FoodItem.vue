@@ -7,11 +7,11 @@
   <div class="flex items-center gap-2 text-xs">
   <template v-if="isEditing">
     <span class="text-blue-600">Б:</span>
-    <input type="number" v-model.number="form.protein" class="w-14 border rounded px-1">
+    <input type="number" v-model.number="form.protein" @change="save" class="w-14 border rounded px-1">
     <span class="text-yellow-600">Ж:</span>
-    <input type="number" v-model.number="form.fat" class="w-14 border rounded px-1">
+    <input type="number" v-model.number="form.fat" @change="save" class="w-14 border rounded px-1">
     <span class="text-green-600">У:</span>
-    <input type="number" v-model.number="form.carbs" class="w-14 border rounded px-1">
+    <input type="number" v-model.number="form.carbs" @change="save" class="w-14 border rounded px-1">
   </template>
   <template v-else>
     <span class="text-blue-600">Б: {{ food.nutrientsPer100g?.protein || 0 }}г</span>

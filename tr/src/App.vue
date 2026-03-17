@@ -5,6 +5,7 @@
   <NavContainer>
     <NavButton icon="📅" label="Дни" @click="router.push({ name: 'days' })" />
     <NavButton icon="🥗" label="Продукты" @click="router.push({ name: 'food-base' })" />
+    <NavButton icon="🏋️‍♂️" label="Упражнения" @click="router.push({ name: 'exercises-base' })" />
   </NavContainer>
 </template>
 

@@ -34,14 +34,32 @@ export interface Day {
   nutrients: Nutrients
   calories: number
   meals: Meal[]
+  workout: Workout[] | null
+}
+
+export interface Set{
+  reps:number
+  weight:number
 }
 
 export interface Exercise {
-    id: string
-    name: string 
-    
-  }
-  export interface Workout {
-    id: string
-    exercices: Exercise[]
-  }
+  id: string
+  name: string
+}
+
+export interface WorkoutExercise{
+  sets: Set[]
+  exercise: Exercise
+}
+
+export interface WorkoutTemplate {
+  id: string
+  name: string
+  exercises: WorkoutExercise[]  
+}
+
+export interface Workout {
+  id: string
+  templateId?: string 
+  exercises: WorkoutExercise[]
+}
