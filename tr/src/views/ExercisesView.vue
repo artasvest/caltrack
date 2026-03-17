@@ -1,24 +1,17 @@
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-        <button 
-    @click="isModalOpen = true " 
-    class="w-full mt-2 py-2 px-3 flex items-center justify-center gap-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg border border-dashed border-gray-300 transition-colors text-sm"
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"> 
+        <div 
+  v-for="section in sections" 
+  :key="section.name"
+  @click="router.push({ name: 'muscle-exercises', params: { muscle: section.name } })"
+  class="bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-all overflow-hidden"
 >
-    <span class="text-lg leading-none">+</span>
-    <span>Добавить упражнение</span>
-</button>
-
-        <AddExerciseModal
-        v-if="isModalOpen"
-        @close="isModalOpen = false"
-        />
-
-        <ExerciseItem 
-        v-for="exercise in exercises" 
-        :key="exercise.id" 
-        :exercise="exercise"
-        @remove="handleRemoveExercise"
-        ></ExerciseItem>
+  <img :src="section.image" class="w-full h-80 object-cover" />
+  <div class="p-4">
+    <h2 class="font-semibold text-gray-800">{{ section.name }}</h2>
+    <p class="text-sm text-gray-400">{{ section.count }} упражнений</p>
+  </div>
+</div>
     </div>
 </template>
 
@@ -28,20 +21,31 @@ import { storeToRefs } from 'pinia';
 import ExerciseItem from '@/components/Workouts/ExerciseItem.vue';
 import AddExerciseModal from '@/components/Workouts/AddExerciseModal.vue';
 import { ref,onMounted } from 'vue';
+import { muscleGroupMap } from '@/data/muscleGroups'
+import type { MuscleGroup } from '@/types/types';
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const store = useExerciseStore()
 const { exercises } = storeToRefs(store)
 const isModalOpen = ref(false)
 
+const sections = computed(() => {
+  return Object.entries(muscleGroupMap).map(([section, data]) => ({
+    name: section,
+    image: data.image,
+    count: exercises.value.filter(e => {
+           const primary = e.muscles[0]?.muscle
+           return primary !== undefined && data.muscles.includes(primary)
+           }).length
+  }))
+})
+
 onMounted(async () => {
   await store.loadExercises()
 })
-
-function handleRemoveExercise(exerciseId: string) {
-    store.removeExercise(exerciseId)
-}
-
-
 
 </script>
 

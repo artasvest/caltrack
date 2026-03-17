@@ -39,7 +39,7 @@ export const useDayStore = defineStore('days', () => {
   days.value = generated.map(day => {
     const found = saved.find(s => s.date === day.date)
     return found ?? day
-  })
+  }).reverse()
 }
 
   async function updateDay(date: string, data: Partial<Day>) {

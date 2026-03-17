@@ -1,7 +1,7 @@
 <template>
     <div>
          <input type="text" v-model="name">
-        <button @click="submit">подтвердить</button>
+        <button @click="">подтвердить</button>
         <button @click="emit('close')">закрыть</button>
     </div>
 </template>
@@ -16,15 +16,7 @@ const name = ref('')
 const store = useExerciseStore()
 
 
-async function submit(){
-    if(!name.value) return
-    await store.addExercise({
-        id: crypto.randomUUID(),
-        name: name.value
-    })
-    name.value = ''
-    emit('close')
-}
+
 
 const emit = defineEmits<{
   close: []

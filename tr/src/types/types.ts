@@ -46,9 +46,37 @@ export interface templateSet{
   reps:number
 }
 
+export type ExerciseType = 'база' | 'изоляция'
+
+export type MuscleGroup = 
+  'грудь' | 
+  'верхняя спина' | 
+  'нижняя спина' | 
+  'широчайшие' |
+  'квадрицепс' | 
+  'бицепс бедра' | 
+  'ягодицы' |
+  'икры' |
+  'плечи' | 
+  'бицепс' | 
+  'трицепс' | 
+  'пресс' |
+  'предплечья' |
+  'задние дельты' | 
+  'трапеция'
+  
+  
+
+export interface MuscleWeight {
+  muscle: MuscleGroup
+  weight: number
+}
+
 export interface Exercise {
   id: string
   name: string
+  type: ExerciseType
+  muscles: MuscleWeight[]
 }
 
 export interface TemplateWorkoutExercise{
