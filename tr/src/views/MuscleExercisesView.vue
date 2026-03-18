@@ -17,6 +17,7 @@ import { storeToRefs } from 'pinia'
 import { muscleGroupMap } from '@/data/muscleGroups'
 import type { MuscleGroup } from '@/types/types'
 import ExerciseItem from '@/components/Workouts/ExerciseItem.vue'
+import { slugMuscleMap } from '@/data/muscleGroups'
 
 const props = defineProps<{ muscle: string }>()
 
@@ -25,7 +26,8 @@ const { exercises } = storeToRefs(store)
 
 onMounted(() => store.loadExercises())
 
-const muscles = computed(() => muscleGroupMap[props.muscle]?.muscles ?? [])
+const muscleName = computed(() => slugMuscleMap[props.muscle] ?? '')
+const muscles = computed(() => muscleName.value ? muscleGroupMap[muscleName.value]?.muscles ?? [] : [])
 
 const filteredExercises = computed(() =>
   exercises.value.filter(e => {

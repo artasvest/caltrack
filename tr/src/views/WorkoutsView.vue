@@ -14,7 +14,9 @@
         @close="isWorkoutModalOpen = false"
         />
     
-    <WorkoutItem v-for="workout in workouts" :key="workout.id" :workout="workout"> </WorkoutItem>
+    <WorkoutItem v-for="workout in workouts" :key="workout.id" :workout="workout" 
+    @click="router.push({ name: 'workout-details', params: { id: workout.id} })"
+    > </WorkoutItem>
 
   </div>
 </template>
@@ -25,6 +27,9 @@ import { useWorkoutStore } from '@/stores/workoutStore';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import AddWorkoutModal from '@/components/Workouts/AddWorkoutModal.vue';
+import { useExerciseStore } from '@/stores/exerciseStore'
+import router from '@/router';
+const exerciseStore = useExerciseStore()
 const store = useWorkoutStore()
 const { workouts } = storeToRefs(store)
 
@@ -33,6 +38,8 @@ const isWorkoutModalOpen = ref(false)
 
 onMounted(async () => {
   await store.loadWorkouts()
+  await exerciseStore.loadExercises()
+
 })
 
 

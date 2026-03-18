@@ -3,7 +3,7 @@
         <div 
   v-for="section in sections" 
   :key="section.name"
-  @click="router.push({ name: 'muscle-exercises', params: { muscle: section.name } })"
+  @click="router.push({ name: 'muscle-exercises', params: { muscle: muscleSlugMap[section.name] } })"
   class="bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-all overflow-hidden"
 >
   <img :src="section.image" class="w-full h-80 object-cover" />
@@ -21,7 +21,7 @@ import { storeToRefs } from 'pinia';
 import ExerciseItem from '@/components/Workouts/ExerciseItem.vue';
 import AddExerciseModal from '@/components/Workouts/AddExerciseModal.vue';
 import { ref,onMounted } from 'vue';
-import { muscleGroupMap } from '@/data/muscleGroups'
+import { muscleGroupMap, muscleSlugMap } from '@/data/muscleGroups'
 import type { MuscleGroup } from '@/types/types';
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -31,6 +31,8 @@ const router = useRouter()
 const store = useExerciseStore()
 const { exercises } = storeToRefs(store)
 const isModalOpen = ref(false)
+
+
 
 const sections = computed(() => {
   return Object.entries(muscleGroupMap).map(([section, data]) => ({

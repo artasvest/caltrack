@@ -5,6 +5,8 @@ import FoodsView from '@/views/FoodsView.vue'
 import ExercisesView from '@/views/ExercisesView.vue'
 import WorkoutsView from '@/views/WorkoutsView.vue'
 import MuscleExercisesView from '@/views/MuscleExercisesView.vue'
+import WorkoutDetails from '@/views/WorkoutDetails.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,16 +32,22 @@ const router = createRouter({
       component: ExercisesView,
     },
     {
+      path: '/exercises/:muscle',
+      name: 'muscle-exercises',
+      component: MuscleExercisesView,
+      props: true
+    },
+    {
       path: '/workouts',
       name:'workouts-base',
       component: WorkoutsView,
     },
     {
-      path: '/exercises/:muscle',
-      name: 'muscle-exercises',
-      component: MuscleExercisesView,
-      props: true
-    }
+      path: '/workouts/:id',
+      name:'workout-details',
+      component: WorkoutDetails,
+    },
+
   ],
 })
 

@@ -5,11 +5,11 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e1',
     name: 'Жим лёжа со штангой',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'грудь', weight: 1.0 },
       { muscle: 'трицепс', weight: 0.5 },
-      { muscle: 'плечи', weight: 0.3 }
+      { muscle: 'плечи', weight: 0.3 } // передняя дельта
     ]
   },
   {
@@ -25,10 +25,10 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e3',
     name: 'Жим под углом со штангой',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'грудь', weight: 1.0 },
-      { muscle: 'плечи', weight: 0.4 },
+      { muscle: 'плечи', weight: 0.5 }, // чуть больше, т.к. угол
       { muscle: 'трицепс', weight: 0.3 }
     ]
   },
@@ -38,11 +38,10 @@ export const defaultExercises: Exercise[] = [
     type: 'база',
     muscles: [
       { muscle: 'грудь', weight: 1.0 },
-      { muscle: 'плечи', weight: 0.4 },
+      { muscle: 'плечи', weight: 0.5 },
       { muscle: 'трицепс', weight: 0.3 }
     ]
   },
-  // *** ДОБАВЛЕНО: Жим в хаммере ***
   {
     id: 'e48',
     name: 'Жим в хаммере (грудь)',
@@ -56,14 +55,13 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e5',
     name: 'Отжимания на брусьях',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'грудь', weight: 1.0 },
-      { muscle: 'трицепс', weight: 0.7 },
-      { muscle: 'плечи', weight: 0.3 }
+      { muscle: 'трицепс', weight: 0.8 }, // на брусьях трицепс работает мощно
+      { muscle: 'плечи', weight: 0.4 }
     ]
   },
-  // *** ДОБАВЛЕНО: Отжимания от пола ***
   {
     id: 'e49',
     name: 'Отжимания от пола',
@@ -71,7 +69,8 @@ export const defaultExercises: Exercise[] = [
     muscles: [
       { muscle: 'грудь', weight: 1.0 },
       { muscle: 'трицепс', weight: 0.5 },
-      { muscle: 'плечи', weight: 0.3 }
+      { muscle: 'плечи', weight: 0.3 },
+      { muscle: 'пресс', weight: 0.2 } // стабилизация
     ]
   },
   {
@@ -98,13 +97,13 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'грудь', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Сведение в кроссовере сидя/стоя ***
   {
     id: 'e50',
     name: 'Сведение рук в кроссовере (верхние блоки)',
     type: 'изоляция',
     muscles: [
-      { muscle: 'грудь', weight: 1.0 }
+      { muscle: 'грудь', weight: 1.0 },
+      { muscle: 'плечи', weight: 0.1 } // немного передней дельты
     ]
   },
   {
@@ -120,25 +119,26 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e9',
     name: 'Становая тяга',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'нижняя спина', weight: 1.0 },
-      { muscle: 'широчайшие', weight: 0.7 },
-      { muscle: 'ягодицы', weight: 0.6 },
-      { muscle: 'бицепс бедра', weight: 0.5 },
+      { muscle: 'бицепс бедра', weight: 0.8 },
+      { muscle: 'ягодицы', weight: 0.7 },
+      { muscle: 'широчайшие', weight: 0.4 },
       { muscle: 'трапеция', weight: 0.4 },
-      { muscle: 'бицепс', weight: 0.3 }
+      { muscle: 'предплечья', weight: 0.3 }
     ]
   },
   {
     id: 'e10',
     name: 'Подтягивания',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'широчайшие', weight: 1.0 },
-      { muscle: 'бицепс', weight: 0.6 },
-      { muscle: 'верхняя спина', weight: 0.4 },
-      { muscle: 'плечи', weight: 0.2 }
+      { muscle: 'верхняя спина', weight: 0.7 }, // ромбовидные + сред трапеция
+      { muscle: 'задние дельты', weight: 0.4 }, // +++ важно!
+      { muscle: 'бицепс', weight: 0.5 },
+      { muscle: 'предплечья', weight: 0.2 }
     ]
   },
   {
@@ -147,8 +147,9 @@ export const defaultExercises: Exercise[] = [
     type: 'база',
     muscles: [
       { muscle: 'широчайшие', weight: 1.0 },
-      { muscle: 'бицепс', weight: 0.6 },
-      { muscle: 'верхняя спина', weight: 0.3 }
+      { muscle: 'верхняя спина', weight: 0.5 },
+      { muscle: 'задние дельты', weight: 0.3 }, // +++
+      { muscle: 'бицепс', weight: 0.5 }
     ]
   },
   {
@@ -156,22 +157,22 @@ export const defaultExercises: Exercise[] = [
     name: 'Тяга горизонтального блока',
     type: 'база',
     muscles: [
-      { muscle: 'широчайшие', weight: 1.0 },
-      { muscle: 'верхняя спина', weight: 0.6 },
-      { muscle: 'бицепс', weight: 0.4 },
-      { muscle: 'задние дельты', weight: 0.3 }
+      { muscle: 'широчайшие', weight: 0.8 }, // чуть меньше, чем в вертикальной
+      { muscle: 'верхняя спина', weight: 1.0 }, // здесь главные ромбовидные!
+      { muscle: 'задние дельты', weight: 0.5 }, // +++
+      { muscle: 'бицепс', weight: 0.4 }
     ]
   },
   {
     id: 'e13',
     name: 'Тяга штанги в наклоне',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'верхняя спина', weight: 1.0 },
-      { muscle: 'широчайшие', weight: 0.7 },
-      { muscle: 'бицепс', weight: 0.4 },
-      { muscle: 'нижняя спина', weight: 0.3 },
-      { muscle: 'задние дельты', weight: 0.3 }
+      { muscle: 'широчайшие', weight: 0.8 },
+      { muscle: 'задние дельты', weight: 0.5 },
+      { muscle: 'нижняя спина', weight: 0.4 },
+      { muscle: 'бицепс', weight: 0.4 }
     ]
   },
   {
@@ -181,18 +182,18 @@ export const defaultExercises: Exercise[] = [
     muscles: [
       { muscle: 'широчайшие', weight: 1.0 },
       { muscle: 'верхняя спина', weight: 0.6 },
-      { muscle: 'бицепс', weight: 0.4 },
-      { muscle: 'задние дельты', weight: 0.3 }
+      { muscle: 'задние дельты', weight: 0.4 },
+      { muscle: 'бицепс', weight: 0.3 }
     ]
   },
-  // *** ДОБАВЛЕНО: Тяга в хаммере (спина) ***
   {
     id: 'e52',
     name: 'Тяга в хаммере (одноручная/двуручная)',
     type: 'база',
     muscles: [
       { muscle: 'широчайшие', weight: 1.0 },
-      { muscle: 'верхняя спина', weight: 0.5 },
+      { muscle: 'верхняя спина', weight: 0.6 },
+      { muscle: 'задние дельты', weight: 0.3 },
       { muscle: 'бицепс', weight: 0.3 }
     ]
   },
@@ -202,8 +203,8 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'нижняя спина', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.4 },
-      { muscle: 'бицепс бедра', weight: 0.3 }
+      { muscle: 'ягодицы', weight: 0.5 },
+      { muscle: 'бицепс бедра', weight: 0.4 }
     ]
   },
   {
@@ -212,17 +213,17 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'широчайшие', weight: 1.0 },
-      { muscle: 'грудь', weight: 0.3 }
+      { muscle: 'грудь', weight: 0.4 }
     ]
   },
-  // *** ДОБАВЛЕНО: Шраги гантели/штанга уже есть в плечах, но ок
   {
     id: 'e53',
     name: 'Тяга лица (лицевая тяга)',
     type: 'изоляция',
     muscles: [
       { muscle: 'задние дельты', weight: 1.0 },
-      { muscle: 'верхняя спина', weight: 0.7 }
+      { muscle: 'верхняя спина', weight: 0.6 }, // трапеция + ромбы
+      { muscle: 'бицепс', weight: 0.2 }
     ]
   },
 
@@ -230,52 +231,52 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e17',
     name: 'Приседания со штангой',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'квадрицепс', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.7 },
-      { muscle: 'бицепс бедра', weight: 0.4 },
-      { muscle: 'нижняя спина', weight: 0.3 }
+      { muscle: 'ягодицы', weight: 0.8 },
+      { muscle: 'бицепс бедра', weight: 0.5 },
+      { muscle: 'нижняя спина', weight: 0.4 },
+      { muscle: 'икры', weight: 0.2 }
     ]
   },
   {
     id: 'e18',
     name: 'Жим ногами',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'квадрицепс', weight: 1.0 },
       { muscle: 'ягодицы', weight: 0.6 },
       { muscle: 'бицепс бедра', weight: 0.3 }
     ]
   },
-  // *** ДОБАВЛЕНО: Жим ногами (узкая/широкая постановка) - оставим как одно, но можно дубляж
   {
     id: 'e54',
     name: 'Жим ногами (широкая постановка)',
     type: 'база',
     muscles: [
       { muscle: 'бицепс бедра', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.8 },
+      { muscle: 'ягодицы', weight: 0.9 },
       { muscle: 'квадрицепс', weight: 0.5 }
     ]
   },
   {
     id: 'e19',
     name: 'Выпады',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'квадрицепс', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.8 },
-      { muscle: 'бицепс бедра', weight: 0.3 }
+      { muscle: 'ягодицы', weight: 0.9 },
+      { muscle: 'бицепс бедра', weight: 0.4 }
     ]
   },
   {
     id: 'e20',
     name: 'Румынская тяга',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'бицепс бедра', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.7 },
+      { muscle: 'ягодицы', weight: 0.8 },
       { muscle: 'нижняя спина', weight: 0.4 }
     ]
   },
@@ -311,14 +312,13 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'ягодицы', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Приведение ног ***
   {
     id: 'e55',
     name: 'Приведение ног в тренажере',
     type: 'изоляция',
     muscles: [
-      { muscle: 'ягодицы', weight: 0.7 },
-      { muscle: 'бицепс бедра', weight: 0.5 } // Приводящие, но аппроксимируем
+      { muscle: 'ягодицы', weight: 0.6 }, // большая ягодичная
+      { muscle: 'бицепс бедра', weight: 0.3 } // полусухожильная и др
     ]
   },
   {
@@ -327,7 +327,7 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'ягодицы', weight: 1.0 },
-      { muscle: 'бицепс бедра', weight: 0.2 } 
+      { muscle: 'бицепс бедра', weight: 0.2 }
     ]
   },
   {
@@ -346,24 +346,23 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'икры', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Гакк-приседания
   {
     id: 'e56',
     name: 'Гакк-приседания',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'квадрицепс', weight: 1.0 },
-      { muscle: 'ягодицы', weight: 0.4 }
+      { muscle: 'ягодицы', weight: 0.5 }
     ]
   },
   {
     id: 'e73',
     name: 'Ягодичный мост',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
       { muscle: 'ягодицы', weight: 1.0 },
-      { muscle: 'бицепс бедра', weight: 0.5 },
-      { muscle: 'нижняя спина', weight: 0.3 } 
+      { muscle: 'бицепс бедра', weight: 0.6 },
+      { muscle: 'нижняя спина', weight: 0.3 }
     ]
   },
 
@@ -371,11 +370,11 @@ export const defaultExercises: Exercise[] = [
   {
     id: 'e26',
     name: 'Жим штанги стоя',
-    type: 'база',
+    type: 'тяжёлая база',
     muscles: [
-      { muscle: 'плечи', weight: 1.0 },
-      { muscle: 'трицепс', weight: 0.5 },
-      { muscle: 'верхняя спина', weight: 0.2 }
+      { muscle: 'плечи', weight: 1.0 }, // перед/сред дельты
+      { muscle: 'трицепс', weight: 0.4 },
+      { muscle: 'верхняя спина', weight: 0.2 } // трапеция
     ]
   },
   {
@@ -392,8 +391,8 @@ export const defaultExercises: Exercise[] = [
     name: 'Тяга штанги к подбородку',
     type: 'база',
     muscles: [
-      { muscle: 'плечи', weight: 1.0 },
-      { muscle: 'верхняя спина', weight: 0.5 },
+      { muscle: 'плечи', weight: 1.0 }, // средняя дельта
+      { muscle: 'трапеция', weight: 0.7 },
       { muscle: 'бицепс', weight: 0.2 }
     ]
   },
@@ -402,7 +401,7 @@ export const defaultExercises: Exercise[] = [
     name: 'Разводка гантелей в стороны',
     type: 'изоляция',
     muscles: [
-      { muscle: 'плечи', weight: 1.0 }
+      { muscle: 'плечи', weight: 1.0 } // средняя дельта
     ]
   },
   {
@@ -411,7 +410,7 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'задние дельты', weight: 1.0 },
-      { muscle: 'верхняя спина', weight: 0.3 }
+      { muscle: 'верхняя спина', weight: 0.4 }
     ]
   },
   {
@@ -419,18 +418,9 @@ export const defaultExercises: Exercise[] = [
     name: 'Подъём гантелей перед собой',
     type: 'изоляция',
     muscles: [
-      { muscle: 'плечи', weight: 1.0 }
+      { muscle: 'плечи', weight: 1.0 } // передняя дельта
     ]
   },
-  {
-    id: 'e32',
-    name: 'Шраги',
-    type: 'изоляция',
-    muscles: [
-      { muscle: 'трапеция', weight: 1.0 }
-    ]
-  },
-  // *** ДОБАВЛЕНО: Подъем гантелей перед собой (попеременно)
   {
     id: 'e57',
     name: 'Подъем гантелей перед собой (попеременно)',
@@ -445,7 +435,16 @@ export const defaultExercises: Exercise[] = [
     type: 'база',
     muscles: [
       { muscle: 'плечи', weight: 1.0 },
-      { muscle: 'трицепс', weight: 0.2 }
+      { muscle: 'трицепс', weight: 0.3 }
+    ]
+  },
+  {
+    id: 'e32',
+    name: 'Шраги',
+    type: 'изоляция',
+    muscles: [
+      { muscle: 'трапеция', weight: 1.0 },
+      { muscle: 'плечи', weight: 0.2 } // немного сред дельты
     ]
   },
 
@@ -459,8 +458,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'предплечья', weight: 0.3 }
     ]
   },
-  // *** ДОБАВЛЕНО: EZ-гриф и Прямой гриф (вариации) ***
-
   {
     id: 'e59',
     name: 'Подъем EZ-грифа на бицепс',
@@ -476,7 +473,7 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'предплечья', weight: 1.0 },
-      { muscle: 'бицепс', weight: 0.5 }
+      { muscle: 'бицепс', weight: 0.4 } // плечелучевая, а не бицепс
     ]
   },
   {
@@ -493,8 +490,8 @@ export const defaultExercises: Exercise[] = [
     name: 'Молотки',
     type: 'изоляция',
     muscles: [
-      { muscle: 'бицепс', weight: 1.0 },
-      { muscle: 'предплечья', weight: 0.5 }
+      { muscle: 'бицепс', weight: 0.8 }, // брахиалис + бицепс
+      { muscle: 'предплечья', weight: 0.6 } // плечелучевая
     ]
   },
   {
@@ -505,7 +502,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'бицепс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Скотт с EZ-грифом ***
   {
     id: 'e61',
     name: 'Подъем EZ-грифа на скамье Скотта',
@@ -522,7 +518,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'бицепс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Концентрированный подъем ***
   {
     id: 'e62',
     name: 'Концентрированный подъем на бицепс',
@@ -539,8 +534,8 @@ export const defaultExercises: Exercise[] = [
     type: 'база',
     muscles: [
       { muscle: 'трицепс', weight: 1.0 },
-      { muscle: 'грудь', weight: 0.4 },
-      { muscle: 'плечи', weight: 0.2 }
+      { muscle: 'грудь', weight: 0.5 },
+      { muscle: 'плечи', weight: 0.3 }
     ]
   },
   {
@@ -551,7 +546,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'трицепс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Французский жим с гантелями/сидя ***
   {
     id: 'e63',
     name: 'Французский жим с гантелями',
@@ -568,7 +562,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'трицепс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Разгибание на блоке (обратный хват/канаты) ***
   {
     id: 'e64',
     name: 'Разгибание на блоке (канаты)',
@@ -591,7 +584,7 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'трицепс', weight: 1.0 },
-      { muscle: 'плечи', weight: 0.2 }
+      { muscle: 'плечи', weight: 0.3 }
     ]
   },
   {
@@ -602,7 +595,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'трицепс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Кикбэк (разгибание в наклоне) ***
   {
     id: 'e66',
     name: 'Кикбэк (разгибание в наклоне)',
@@ -626,7 +618,9 @@ export const defaultExercises: Exercise[] = [
     name: 'Подъём ног в висе',
     type: 'изоляция',
     muscles: [
-      { muscle: 'пресс', weight: 1.0 }
+      { muscle: 'пресс', weight: 1.0 },
+      { muscle: 'бицепс бедра', weight: 0.2 }, // подвздошно-поясничная
+      { muscle: 'предплечья', weight: 0.2 } // хват
     ]
   },
   {
@@ -635,6 +629,7 @@ export const defaultExercises: Exercise[] = [
     type: 'изоляция',
     muscles: [
       { muscle: 'пресс', weight: 1.0 },
+      { muscle: 'плечи', weight: 0.3 },
       { muscle: 'нижняя спина', weight: 0.3 }
     ]
   },
@@ -654,7 +649,6 @@ export const defaultExercises: Exercise[] = [
       { muscle: 'пресс', weight: 1.0 }
     ]
   },
-  // *** ДОБАВЛЕНО: Боковые планки, подъемы ног лежа ***
   {
     id: 'e67',
     name: 'Подъем ног лежа',
@@ -668,8 +662,8 @@ export const defaultExercises: Exercise[] = [
     name: 'Боковая планка',
     type: 'изоляция',
     muscles: [
-      { muscle: 'пресс', weight: 0.7 }, // Косые
-      { muscle: 'нижняя спина', weight: 0.3 }
+      { muscle: 'пресс', weight: 0.8 }, // косые
+      { muscle: 'плечи', weight: 0.3 }
     ]
   },
   {
@@ -677,8 +671,7 @@ export const defaultExercises: Exercise[] = [
     name: 'Русский твист (повороты корпуса)',
     type: 'изоляция',
     muscles: [
-      { muscle: 'пресс', weight: 1.0 }
+      { muscle: 'пресс', weight: 1.0 } // косые
     ]
   },
-  // *** ДОБАВЛЕНО: Вакуум (чисто для галочки, хоть и без веса) ***
 ]

@@ -14,3 +14,41 @@ export const muscleGroupMap: Record<string, { muscles: MuscleGroup[], image: str
   'Руки': { muscles: ['бицепс', 'трицепс', 'предплечья'], image: arms },
   'Пресс': { muscles: ['пресс'], image: abs },
 }
+
+export const muscleSlugMap: Record<string, string> = {
+  'Грудь': 'chest',
+  'Спина': 'back',
+  'Ноги': 'legs',
+  'Плечи': 'shoulders',
+  'Руки': 'arms',
+  'Пресс': 'abs',
+}
+
+export const slugMuscleMap: Record<string, string> = Object.fromEntries(
+  Object.entries(muscleSlugMap).map(([ru, en]) => [en, ru])
+)
+
+export const musclePriority: Partial<Record<MuscleGroup, number>> = {
+  // большие мышцы — приоритет 1
+  'широчайшие': 1,
+  'грудь': 1,
+  'квадрицепс': 1,
+  'ягодицы': 1,
+  'бицепс бедра': 1,
+  'нижняя спина': 1,
+  
+  // средние — приоритет 2
+  'верхняя спина': 2,
+  'плечи': 2,
+  'трапеция': 2,
+  
+  // малые — приоритет 3
+  'бицепс': 3,
+  'трицепс': 3,
+  'задние дельты': 3,
+  'пресс': 3,
+  
+  // совсем малые — приоритет 4
+  'икры': 4,
+  'предплечья': 4,
+}
