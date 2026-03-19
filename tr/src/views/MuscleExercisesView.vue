@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-2xl mx-auto p-5">
-    <h1 class="text-2xl font-bold mb-4">{{ muscle }}</h1>
+    <h1 class="text-2xl font-bold mb-4">{{ muscleName }}</h1>
     <ExerciseItem
       v-for="exercise in filteredExercises"
       :key="exercise.id"
